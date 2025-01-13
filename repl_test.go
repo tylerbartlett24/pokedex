@@ -5,39 +5,40 @@ import (
 )
 
 func TestCleanInput(t *testing.T) {
-
 	cases := []struct {
 		input    string
 		expected []string
 	}{
 		{
-			input:    "hello world",
+			input:    "  ",
+			expected: []string{},
+		},
+		{
+			input:    "  hello  ",
+			expected: []string{"hello"},
+		},
+		{
+			input:    "  hello  world  ",
 			expected: []string{"hello", "world"},
 		},
 		{
-			input:    "  Hello    World   ",
+			input:    "  HellO  World  ",
 			expected: []string{"hello", "world"},
-		},
-		{
-			input:    "Public Private GREG",
-			expected: []string{"public", "private", "greg"},
 		},
 	}
 
 	for _, c := range cases {
 		actual := cleanInput(c.input)
 		if len(actual) != len(c.expected) {
-			t.Errorf("Length of result is not correct.\n Expected %v\n Actual %v",
-				len(c.expected), len(actual))
+			t.Errorf("lengths don't match: '%v' vs '%v'", actual, c.expected)
+			continue
 		}
 		for i := range actual {
 			word := actual[i]
 			expectedWord := c.expected[i]
 			if word != expectedWord {
-				t.Errorf("Resultant slice is not correct.\n Expected %v\n Actual %v",
-					expectedWord, word)
+				t.Errorf("cleanInput(%v) == %v, expected %v", c.input, actual, c.expected)
 			}
 		}
 	}
-
 }
