@@ -8,7 +8,7 @@ import (
 	"github.com/tylerbartlett24/pokedex/internal/pokeapi"
 )
 
-func commandMapf(cfg *config) error {
+func commandMapf(cfg *config, dummy string) error {
 	if cfg.nextLocationsURL != nil {
 		rawData, ok := cfg.cache.Get(*cfg.nextLocationsURL)
 		if ok {
@@ -48,7 +48,7 @@ func commandMapf(cfg *config) error {
 	return nil
 }
 
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, dummy string) error {
 	if cfg.prevLocationsURL == nil {
 		return errors.New("you're on the first page")
 	}
